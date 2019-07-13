@@ -10,3 +10,4 @@ caption=Python Black
 method=do_format
 lexers=Python
 force_all=1
+config=cuda_fmt_python_black.json
