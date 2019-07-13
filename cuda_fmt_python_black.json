@@ -1,0 +1,5 @@
+{
+  "line_len": 88,
+  "target": "py33", // one of: "py27", "py33", "py34", "py35", ...
+  "string_normalization": true 
+}
