@@ -1,0 +1,12 @@
+[info]
+title=Formatter for Python: Black
+desc=
+type=cudatext-plugin
+subdir=cuda_fmt_python_black
+homepage=https://github.com/cudatext-addons/cuda_fmt_python_black
+
+[fmt1]
+caption=Python Black
+method=do_format
+lexers=Python
+force_all=1
