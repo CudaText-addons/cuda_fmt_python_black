@@ -10,19 +10,6 @@ if PY_OK:
     from . import black
     from .black import TargetVersion as Ver
 
-
-def get_mode():
-
-    fn = get_config_filename('Python Black')
-    s = open(fn, 'r').read()
-    #del // comments
-    s = re.sub(r'(^|[^:])//.*', r'\1', s)
-    d = json.loads(s)
-
-    line_len = d.get('line_len', black.DEFAULT_LINE_LENGTH)
-    norm = d.get('string_normalization', True)
-    v = d.get('target')
-
     ver27 = {
             Ver.PY27,
             Ver.PY33,
@@ -76,8 +63,21 @@ def get_mode():
         'py38': ver38,
     }
 
+
+def get_mode():
+
+    fn = get_config_filename('Python Black')
+    s = open(fn, 'r').read()
+    #del // comments
+    s = re.sub(r'(^|[^:])//.*', r'\1', s)
+    d = json.loads(s)
+
+    line_len = d.get('line_len', black.DEFAULT_LINE_LENGTH)
+    norm = d.get('string_normalization', True)
+    target = d.get('target')
+
     return black.FileMode(
-        target_versions = ver_map.get(v, ver38),
+        target_versions = ver_map.get(target, ver33),
         line_length = line_len,
         string_normalization = norm
         )
