@@ -9,5 +9,5 @@ homepage=https://github.com/cudatext-addons/cuda_fmt_python_black
 caption=Python Black
 method=do_format
 lexers=Python
-force_all=1
+force_all=0
 config=cuda_fmt_python_black.json
