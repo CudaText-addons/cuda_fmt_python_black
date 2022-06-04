@@ -15,18 +15,33 @@ if PY_OK:
             Ver.PY36,
             Ver.PY37,
             Ver.PY38,
+            Ver.PY39,
+            Ver.PY310,
             }
     ver36 = {
             Ver.PY36,
             Ver.PY37,
             Ver.PY38,
+            Ver.PY39,
+            Ver.PY310,
             }
     ver37 = {
             Ver.PY37,
             Ver.PY38,
+            Ver.PY39,
+            Ver.PY310,
             }
     ver38 = {
             Ver.PY38,
+            Ver.PY39,
+            Ver.PY310,
+            }
+    ver39 = {
+            Ver.PY39,
+            Ver.PY310,
+            }
+    ver310 = {
+            Ver.PY310,
             }
 
     ver_map = {
@@ -34,6 +49,8 @@ if PY_OK:
         'py36': ver36,
         'py37': ver37,
         'py38': ver38,
+        'py39': ver39,
+        'py310': ver310,
     }
 
 
