@@ -1,4 +1,7 @@
 
+2022.06.04
++ add: upgraged Black to 22.3.0
+
 2021.11.17
 + add: changed install.inf line "force_all=1" to "=0" and now Black can format the selection too
 
