@@ -6,7 +6,7 @@ from cuda_fmt import get_config_filename
 
 PY_OK = sys.version_info[:2] >= (3, 6)
 if PY_OK:
-    sys.path.append(os.path.dirname(__file__))
+    sys.path.insert(0, os.path.dirname(__file__))
     from . import black
     from .black import TargetVersion as Ver
 
