@@ -10,30 +10,6 @@ if PY_OK:
     from . import black
     from .black import TargetVersion as Ver
 
-    ver27 = {
-            Ver.PY27,
-            Ver.PY33,
-            Ver.PY34,
-            Ver.PY35,
-            Ver.PY36,
-            Ver.PY37,
-            Ver.PY38,
-            }
-    ver33 = {
-            Ver.PY33,
-            Ver.PY34,
-            Ver.PY35,
-            Ver.PY36,
-            Ver.PY37,
-            Ver.PY38,
-            }
-    ver34 = {
-            Ver.PY34,
-            Ver.PY35,
-            Ver.PY36,
-            Ver.PY37,
-            Ver.PY38,
-            }
     ver35 = {
             Ver.PY35,
             Ver.PY36,
@@ -54,9 +30,6 @@ if PY_OK:
             }
 
     ver_map = {
-        'py27': ver27,
-        'py33': ver33,
-        'py34': ver34,
         'py35': ver35,
         'py36': ver36,
         'py37': ver37,
@@ -77,7 +50,7 @@ def get_mode():
     target = d.get('target')
 
     return black.FileMode(
-        target_versions = ver_map.get(target, ver33),
+        target_versions = ver_map.get(target, ver36),
         line_length = line_len,
         string_normalization = norm
         )
