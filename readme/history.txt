@@ -1,3 +1,6 @@
+2023.08.30
++ add: upgraded Black to 23.7.0
+- fix: wrong "import tomli" -> "import toml" in Black code
 
 2022.06.04
 + add: upgraged Black to 22.3.0
