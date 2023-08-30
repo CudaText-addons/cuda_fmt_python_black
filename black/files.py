@@ -24,7 +24,7 @@ from pathspec.patterns.gitwildmatch import GitWildMatchPatternError
 if sys.version_info >= (3, 11):
     import tomllib
 else:
-    import tomli as tomllib
+    import toml as tomllib
 
 from black.output import err
 from black.report import Report
