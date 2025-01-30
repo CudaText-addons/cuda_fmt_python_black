@@ -17,30 +17,22 @@ __all__ = ["Driver", "load_grammar"]
 
 # Python imports
 import io
-import os
 import logging
+import os
 import pkgutil
 import sys
-from typing import (
-    Any,
-    cast,
-    IO,
-    Iterable,
-    List,
-    Optional,
-    Iterator,
-    Tuple,
-    Union,
-)
+from collections.abc import Iterable, Iterator
 from contextlib import contextmanager
 from dataclasses import dataclass, field
-
-# Pgen imports
-from . import grammar, parse, token, tokenize, pgen
 from logging import Logger
-from blib2to3.pytree import NL
+from typing import IO, Any, Optional, Union, cast
+
 from blib2to3.pgen2.grammar import Grammar
 from blib2to3.pgen2.tokenize import GoodTokenInfo
+from blib2to3.pytree import NL
+
+# Pgen imports
+from . import grammar, parse, pgen, token, tokenize
 
 Path = Union[str, "os.PathLike[str]"]
 
@@ -49,7 +41,7 @@ Path = Union[str, "os.PathLike[str]"]
 class ReleaseRange:
     start: int
     end: Optional[int] = None
-    tokens: List[Any] = field(default_factory=list)
+    tokens: list[Any] = field(default_factory=list)
 
     def lock(self) -> None:
         total_eaten = len(self.tokens)
@@ -60,7 +52,7 @@ class TokenProxy:
     def __init__(self, generator: Any) -> None:
         self._tokens = generator
         self._counter = 0
-        self._release_ranges: List[ReleaseRange] = []
+        self._release_ranges: list[ReleaseRange] = []
 
     @contextmanager
     def release(self) -> Iterator["TokenProxy"]:
@@ -130,7 +122,7 @@ class Driver:
 
         lineno = 1
         column = 0
-        indent_columns: List[int] = []
+        indent_columns: list[int] = []
         type = value = start = end = line_text = None
         prefix = ""
 
@@ -176,7 +168,9 @@ class Driver:
             if type in {token.INDENT, token.DEDENT}:
                 prefix = _prefix
             lineno, column = end
-            if value.endswith("\n"):
+            # FSTRING_MIDDLE is the only token that can end with a newline, and
+            # `end` will point to the next line. For that case, don't increment lineno.
+            if value.endswith("\n") and type != token.FSTRING_MIDDLE:
                 lineno += 1
                 column = 0
         else:
@@ -209,8 +203,8 @@ class Driver:
         )
         return self.parse_tokens(tokens, debug)
 
-    def _partially_consume_prefix(self, prefix: str, column: int) -> Tuple[str, str]:
-        lines: List[str] = []
+    def _partially_consume_prefix(self, prefix: str, column: int) -> tuple[str, str]:
+        lines: list[str] = []
         current_line = ""
         current_column = 0
         wait_for_nl = False
@@ -230,6 +224,8 @@ class Driver:
                 current_column += 1
             elif char == "\n":
                 # unexpected empty line
+                current_column = 0
+            elif char == "\f":
                 current_column = 0
             else:
                 # indent is finished
